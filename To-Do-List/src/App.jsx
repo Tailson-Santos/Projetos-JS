@@ -1,25 +1,42 @@
-import { useState } from 'react'
-import { Cadastro } from "./componentes/Cadastro"
+import { useState,useEffect } from 'react'
+import { Header }  from "../src/componentes/Header"
+import { Lista }  from "../src/componentes/Lista"
+
 
 
 
 function App() {
-  const[nome,setNome] = useState("");
+  const[nome,setNome]= useState("");
+  const[lista,setLista]= useState([]);
+  function add(){
+    const novaTask = {
+      id: Date.now(),
+      nome: nome,
+    }
+    setLista([...lista,novaTask])
+
+  }
+
+  function remover(id){
+    const novaLista = lista.filter((ele)=> id !== ele.id);
+
+    setLista(novaLista)
+  }
+
   return (
-    <div className="flex w-screen h-screen">
-
-            <div className="w-1/4 bg-amber-100">
-                <Cadastro 
-                setNome={setNome}
-                value={nome}
-                />
-            </div>
-
-            <div className="flex-1/2 bg-blue-700">
-               
-            </div>
-            
-        </div>
+    <div className='bg-amber-950 flex flex-col items-center gap-4 w-screen h-screen'>
+      <h1>To-Do-List</h1>
+      <Header
+        add={add}
+        setNome={setNome}
+      />
+      <Lista 
+      tarefas={lista}
+      remover={remover}    
+      />
+   
+ 
+    </div>
   )
 }
 
