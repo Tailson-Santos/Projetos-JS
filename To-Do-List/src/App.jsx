@@ -17,7 +17,6 @@ function App() {
     }
     
 
-
     setLista([...lista,novaTask])
     setNome("")
 
@@ -40,6 +39,19 @@ function App() {
     })
     setLista(novaLista)
   }
+
+
+  useEffect(()=>{
+    localStorage.setItem("lista",JSON.stringify(lista))
+  },[lista])
+
+  useEffect(() => {
+    const listaRecuperada = JSON.parse(localStorage.getItem("lista") || [])
+  
+    if (listaRecuperada) {
+      setLista(listaRecuperada)
+    }
+  }, [])
 
   return (
     <div className='bg-amber-950 flex flex-col items-center gap-4 w-full min-h-screen'>
