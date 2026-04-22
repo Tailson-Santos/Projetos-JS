@@ -7,7 +7,12 @@ import { Lista }  from "../src/componentes/Lista"
 
 function App() {
   const[nome,setNome]= useState("");
-  const[lista,setLista]= useState([]);
+  const [lista, setLista] = useState(() => {
+    const listaSalva = localStorage.getItem("lista");
+    return listaSalva ? JSON.parse(listaSalva) : [];
+  });
+
+
   function add(){
     if (!nome.trim()) return
     const novaTask = {
@@ -27,6 +32,8 @@ function App() {
 
     setLista(novaLista)
   }
+
+
   function done(id){
     const novaLista = lista.map((ele)=>{
       if(ele.id === id){
@@ -45,24 +52,20 @@ function App() {
     localStorage.setItem("lista",JSON.stringify(lista))
   },[lista])
 
-  useEffect(() => {
-    const listaRecuperada = JSON.parse(localStorage.getItem("lista") || [])
-  
-    if (listaRecuperada) {
-      setLista(listaRecuperada)
-    }
-  }, [])
+
 
   return (
     <div className='bg-amber-950 flex flex-col items-center gap-4 w-full min-h-screen'>
+      
       <h1 className='text-7xl text-amber-50'>To-Do-List</h1>
+
       <Header
         value={nome}
         nome={nome}
         add={add}
         setNome={setNome}
       />
-      <hr />
+
       <Lista 
       tarefas={lista}
       remover={remover}
