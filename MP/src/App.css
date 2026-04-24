@@ -1,1 +1,24 @@
 @import "tailwindcss";
+:root {
+    padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    font-size: 18px;
+    color: var(--color-text);
+    
+
+    --color-primary: #F4C430;     /* amarelo principal */
+    --color-primary-dark: #D4A514; /* amarelo mais escuro (hover) */
+  
+    --color-background: #000000;  /* fundo preto */
+    --color-surface: #1A1A1A;     /* preto mais suave (cards) */
+  
+    --color-text: #FFFFFF;        /* branco */
+    --color-text-secondary: #D9D9D9; /* cinza claro */
+  
+    --color-gray: #A6A6A6;        /* cinza médio */
+  }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+  }

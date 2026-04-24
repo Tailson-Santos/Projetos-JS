@@ -1,15 +1,17 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import {Header} from "./componentes/Header"
+import {Filtro} from "./componentes/Filtro"
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet"></link>
+
 
 function App() {
-  const [count, setCount] = useState(0)
+const [cidade,setCidade] = useState("");
 
   return (
-    <div>
-      <h1 className='bg-amber-900 font-bold'>teste</h1>
+    <div className='flex flex-col min-w-screen min-h-screen bg-[var(--color-background)]'>
+      <Header/>
+      <Filtro/>
+      
     </div>
   )
 }
