@@ -1,10 +1,11 @@
+
 export function Lista({ cidades = [], toggleFavorito }) {
 
     if (!cidades.length) {
       return <p>Nenhuma cidade encontrada</p>
     }
   
-    const metade = Math.ceil(cidades.length / 2)
+    const metade = Math.floor(cidades.length / 2) + 1
     const primeira = cidades.slice(0, metade)
     const segunda = cidades.slice(metade)
   
@@ -22,9 +23,9 @@ export function Lista({ cidades = [], toggleFavorito }) {
           {lista.map((cidade) => (
             <div
               key={cidade.id}
-              className="grid grid-cols-3 p-2 border-b bg-white hover:bg-gray-100"
+              className="grid grid-cols-3 p-2 border-b bg-white hover:bg-gray-100 font-light"
             >
-              <span>{cidade.nome}</span>
+              <span className="font-bold">{cidade.nome}</span>
               <span className="text-center">{cidade.dias}</span>
   
               <span

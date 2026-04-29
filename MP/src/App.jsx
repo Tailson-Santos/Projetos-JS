@@ -10,7 +10,7 @@ function App() {
   const [ordem, setOrdem] = useState("az")
   const [mostrarFavoritos, setMostrarFavoritos] = useState(false)
 
-  // 💾 carregar do localStorage
+  // carregar do localStorage
   useEffect(() => {
     const dadosSalvos = localStorage.getItem("cidades")
 
@@ -21,12 +21,12 @@ function App() {
     }
   }, [])
 
-  // 💾 salvar no localStorage
+  //  salvar no localStorage
   useEffect(() => {
     localStorage.setItem("cidades", JSON.stringify(cidades))
   }, [cidades])
 
-  // ⭐ favoritar
+  //  favoritar
   function toggleFavorito(id) {
     const novaLista = cidades.map((cidade) =>
       cidade.id === id
@@ -37,7 +37,7 @@ function App() {
     setCidades(novaLista)
   }
 
-  // 🔍 filtro + ordenação
+  //  filtro + ordenação
   const cidadesFiltradas = cidades
     .filter((cidade) => {
       const matchBusca = cidade.nome
