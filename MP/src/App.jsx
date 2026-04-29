@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { Header } from "./componentes/Header"
 import { Filtro } from "./componentes/Filtro"
 import { Cidades } from "./Cidades"
+import { Lista } from "./componentes/Lista"
 
 function App() {
   const [cidades, setCidades] = useState(Cidades)
@@ -12,7 +13,7 @@ function App() {
   // 💾 carregar do localStorage
   useEffect(() => {
     const dadosSalvos = localStorage.getItem("cidades")
-  
+
     if (dadosSalvos) {
       setCidades(JSON.parse(dadosSalvos))
     } else {
@@ -57,136 +58,40 @@ function App() {
       return 0
     })
 
-    const metade = Math.ceil(cidadesFiltradas.length / 2)
-
-  const primeiraColuna = cidadesFiltradas.slice(0, metade)
-  const segundaColuna = cidadesFiltradas.slice(metade)
   return (
     <div className="flex flex-col min-h-screen bg-[var(--color-background)]">
       <Header />
 
-      {/* 🔍 Filtros */}
-      <div className="p-4 flex flex-wrap gap-2 ">
-
-        <input
-          type="text"
-          placeholder="Buscar cidade..."
-          value={busca}
-          onChange={(e) => setBusca(e.target.value)}
-          className="border p-2 rounded"
-        />
-
-        <select
-          value={ordem}
-          onChange={(e) => setOrdem(e.target.value)}
-          className="border p-2 rounded "
-        >
-          <option value="az" >A → Z</option>
-          <option value="za">Z → A</option>
-          <option value="dias-crescente">Dias ↑</option>
-          <option value="dias-decrescente">Dias ↓</option>
-        </select>
-
-        <button
-          onClick={() => setMostrarFavoritos(!mostrarFavoritos)}
-          className="border p-2 rounded"
-        >
-          {mostrarFavoritos ? "Todos" : "Só Favoritos"}
-        </button>
-
-      </div>
+      <Filtro
+        busca={busca}
+        setBusca={setBusca}
+        ordem={ordem}
+        setOrdem={setOrdem}
+        mostrarFavoritos={mostrarFavoritos}
+        setMostrarFavoritos={setMostrarFavoritos}
+      />
 
       <div className="p-4 text-black">
 
-  {/* 📱 MOBILE (1 lista) */}
-  <div className="block lg:hidden">
-
-    {/* Header */}
-    <div className="grid grid-cols-3 bg-gray-200 p-2 font-bold sticky top-0 z-10">
-      <span>Cidade</span>
-      <span className="text-center">Dias úteis</span>
-      <span className="text-right">Fav</span>
-    </div>
-
-    {cidadesFiltradas.map((cidade) => (
-      <div
-        key={cidade.id}
-        className="grid grid-cols-3 p-2 border-b bg-white hover:bg-gray-100"
-      >
-        <span>{cidade.nome}</span>
-        <span className="text-center">{cidade.dias}</span>
-
-        <span
-          onClick={() => toggleFavorito(cidade.id)}
-          className={`text-right material-symbols-outlined cursor-pointer ${
-            cidade.favorito ? "text-yellow-400" : "text-gray-400"
-          }`}
-        >
-          star
-        </span>
-      </div>
-    ))}
-
-  </div>
-
-  {/* 💻 DESKTOP (2 colunas) */}
-  <div className="hidden lg:grid grid-cols-2 gap-4">
-
-    {/* COLUNA 1 */}
-    <div>
-      <div className="grid grid-cols-3 bg-gray-200 p-2 font-bold sticky top-0 z-10">
-        <span>Cidade</span>
-        <span className="text-center">Dias</span>
-        <span className="text-right">Fav</span>
-      </div>
-
-      {primeiraColuna.map((cidade) => (
-        <div key={cidade.id} className="grid grid-cols-3 p-2 border-b bg-white">
-          <span>{cidade.nome}</span>
-          <span className="text-center">{cidade.dias}</span>
-          <span
-            onClick={() => toggleFavorito(cidade.id)}
-            className={`text-right material-symbols-outlined cursor-pointer ${
-              cidade.favorito ? "text-yellow-400" : "text-gray-400"
-            }`}
-          >
-            star
-          </span>
+        {/* 📱 MOBILE */}
+        <div className="block lg:hidden">
+          <Lista
+            cidades={cidadesFiltradas}
+            toggleFavorito={toggleFavorito}
+            colunas={1}
+          />
         </div>
-      ))}
-    </div>
 
-    {/* COLUNA 2 */}
-    <div>
-      <div className="grid grid-cols-3 bg-gray-200 p-2 font-bold sticky top-0 z-10">
-        <span>Cidade</span>
-        <span className="text-center">Dias</span>
-        <span className="text-right">Fav</span>
-      </div>
-
-      {segundaColuna.map((cidade) => (
-        <div key={cidade.id} className="grid grid-cols-3 p-2 border-b bg-white">
-          <span>{cidade.nome}</span>
-          <span className="text-center">{cidade.dias}</span>
-          <span
-            onClick={() => toggleFavorito(cidade.id)}
-            className={`text-right material-symbols-outlined cursor-pointer ${
-              cidade.favorito ? "text-yellow-400" : "text-gray-400"
-            }`}
-          >
-            star
-          </span>
+        {/* 💻 DESKTOP */}
+        <div className="hidden lg:block">
+          <Lista
+            cidades={cidadesFiltradas}
+            toggleFavorito={toggleFavorito}
+            colunas={2}
+          />
         </div>
-      ))}
-    </div>
 
-  </div>
-</div>
-
-    
-      
-
-      
+      </div>
     </div>
   )
 }
